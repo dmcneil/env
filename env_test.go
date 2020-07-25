@@ -43,8 +43,53 @@ func TestGet(t *testing.T) {
 		},
 		{
 			value:    "1",
+			fn:       GetInt8,
+			expected: int8(1),
+		},
+		{
+			value:    "1",
+			fn:       GetInt16,
+			expected: int16(1),
+		},
+		{
+			value:    "1",
+			fn:       GetInt32,
+			expected: int32(1),
+		},
+		{
+			value:    "1",
 			fn:       GetInt64,
 			expected: int64(1),
+		},
+		{
+			value:    "-1",
+			fn:       GetUInt,
+			expected: uint(0),
+		},
+		{
+			value:    "1",
+			fn:       GetUInt,
+			expected: uint(1),
+		},
+		{
+			value:    "1",
+			fn:       GetUInt8,
+			expected: uint8(1),
+		},
+		{
+			value:    "1",
+			fn:       GetUInt16,
+			expected: uint16(1),
+		},
+		{
+			value:    "1",
+			fn:       GetUInt32,
+			expected: uint32(1),
+		},
+		{
+			value:    "1",
+			fn:       GetUInt64,
+			expected: uint64(1),
 		},
 		{
 			value:    "1",
@@ -225,6 +270,42 @@ func TestGetD(t *testing.T) {
 		},
 		{
 			value:    "",
+			def:      int8(1),
+			fn:       GetInt8D,
+			expected: int8(1),
+		},
+		{
+			value:    "2.5",
+			def:      int8(1),
+			fn:       GetInt8D,
+			expected: int8(1),
+		},
+		{
+			value:    "",
+			def:      int16(1),
+			fn:       GetInt16D,
+			expected: int16(1),
+		},
+		{
+			value:    "2.5",
+			def:      int16(1),
+			fn:       GetInt16D,
+			expected: int16(1),
+		},
+		{
+			value:    "",
+			def:      int32(1),
+			fn:       GetInt32D,
+			expected: int32(1),
+		},
+		{
+			value:    "2.5",
+			def:      int32(1),
+			fn:       GetInt32D,
+			expected: int32(1),
+		},
+		{
+			value:    "",
 			def:      int64(1),
 			fn:       GetInt64D,
 			expected: int64(1),
@@ -234,6 +315,66 @@ func TestGetD(t *testing.T) {
 			def:      int64(1),
 			fn:       GetInt64D,
 			expected: int64(1),
+		},
+		{
+			value:    "",
+			def:      uint(1),
+			fn:       GetUIntD,
+			expected: uint(1),
+		},
+		{
+			value:    "2.5",
+			def:      uint(1),
+			fn:       GetUIntD,
+			expected: uint(1),
+		},
+		{
+			value:    "",
+			def:      uint8(1),
+			fn:       GetUInt8D,
+			expected: uint8(1),
+		},
+		{
+			value:    "2.5",
+			def:      uint8(1),
+			fn:       GetUInt8D,
+			expected: uint8(1),
+		},
+		{
+			value:    "",
+			def:      uint16(1),
+			fn:       GetUInt16D,
+			expected: uint16(1),
+		},
+		{
+			value:    "2.5",
+			def:      uint16(1),
+			fn:       GetUInt16D,
+			expected: uint16(1),
+		},
+		{
+			value:    "",
+			def:      uint32(1),
+			fn:       GetUInt32D,
+			expected: uint32(1),
+		},
+		{
+			value:    "2.5",
+			def:      uint32(1),
+			fn:       GetUInt32D,
+			expected: uint32(1),
+		},
+		{
+			value:    "",
+			def:      uint64(1),
+			fn:       GetUInt64D,
+			expected: uint64(1),
+		},
+		{
+			value:    "2.5",
+			def:      uint64(1),
+			fn:       GetUInt64D,
+			expected: uint64(1),
 		},
 		{
 			value:    "",

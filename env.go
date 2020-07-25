@@ -53,6 +53,48 @@ func GetIntD(key string, def int) int {
 	return def
 }
 
+// GetInt8 retrieves an int8 named by key.
+// int8(0) is returned if the value does not exist or is not a valid int8.
+func GetInt8(key string) int8 {
+	return parseInt8(Get(key))
+}
+
+// GetInt8D attempts to retrieve an int8 named by key. If the value is not present, def is returned instead.
+func GetInt8D(key string, def int8) int8 {
+	if v := parseInt8(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetInt16 retrieves an int16 named by key.
+// int16(0) is returned if the value does not exist or is not a valid int16.
+func GetInt16(key string) int16 {
+	return parseInt16(Get(key))
+}
+
+// GetInt16D attempts to retrieve an int16 named by key. If the value is not present, def is returned instead.
+func GetInt16D(key string, def int16) int16 {
+	if v := parseInt16(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetInt32 retrieves an int32 named by key.
+// int32(0) is returned if the value does not exist or is not a valid int32.
+func GetInt32(key string) int32 {
+	return parseInt32(Get(key))
+}
+
+// GetInt32D attempts to retrieve an int32 named by key. If the value is not present, def is returned instead.
+func GetInt32D(key string, def int32) int32 {
+	if v := parseInt32(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
 // GetInt64 retrieves an int64 named by key.
 // int64(0) is returned if the value does not exist or is not a valid int64.
 func GetInt64(key string) int64 {
@@ -62,6 +104,76 @@ func GetInt64(key string) int64 {
 // GetInt64D attempts to retrieve an int64 named by key. If the value is not present, def is returned instead.
 func GetInt64D(key string, def int64) int64 {
 	if v := parseInt64(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetUInt retrieves an uint named by key.
+// uint(0) is returned if the value does not exist or is not a valid uint.
+func GetUInt(key string) uint {
+	return parseUInt(Get(key))
+}
+
+// GetUIntD attempts to retrieve an uint named by key. If the value is not present, def is returned instead.
+func GetUIntD(key string, def uint) uint {
+	if v := parseUInt(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetUInt8 retrieves an uint8 named by key.
+// uint8(0) is returned if the value does not exist or is not a valid uint8.
+func GetUInt8(key string) uint8 {
+	return parseUInt8(Get(key))
+}
+
+// GetUInt8D attempts to retrieve an uint8 named by key. If the value is not present, def is returned instead.
+func GetUInt8D(key string, def uint8) uint8 {
+	if v := parseUInt8(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetUInt16 retrieves an uint16 named by key.
+// uint16(0) is returned if the value does not exist or is not a valid uint16.
+func GetUInt16(key string) uint16 {
+	return parseUInt16(Get(key))
+}
+
+// GetUInt16D attempts to retrieve an uint16 named by key. If the value is not present, def is returned instead.
+func GetUInt16D(key string, def uint16) uint16 {
+	if v := parseUInt16(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetUInt32 retrieves an uint32 named by key.
+// uint32(0) is returned if the value does not exist or is not a valid uint32.
+func GetUInt32(key string) uint32 {
+	return parseUInt32(Get(key))
+}
+
+// GetUInt32D attempts to retrieve an uint32 named by key. If the value is not present, def is returned instead.
+func GetUInt32D(key string, def uint32) uint32 {
+	if v := parseUInt32(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+		return v
+	}
+	return def
+}
+
+// GetUInt64 retrieves an uint64 named by key.
+// uint64(0) is returned if the value does not exist or is not a valid uint64.
+func GetUInt64(key string) uint64 {
+	return parseUInt64(Get(key))
+}
+
+// GetUInt64D attempts to retrieve an uint64 named by key. If the value is not present, def is returned instead.
+func GetUInt64D(key string, def uint64) uint64 {
+	if v := parseUInt64(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
 		return v
 	}
 	return def
@@ -116,8 +228,47 @@ func parseInt(s string) int {
 	return i
 }
 
+func parseInt8(s string) int8 {
+	i, _ := strconv.ParseInt(s, 10, 8)
+	return int8(i)
+}
+
+func parseInt16(s string) int16 {
+	i, _ := strconv.ParseInt(s, 10, 16)
+	return int16(i)
+}
+
+func parseInt32(s string) int32 {
+	i, _ := strconv.ParseInt(s, 10, 32)
+	return int32(i)
+}
+
 func parseInt64(s string) int64 {
 	i, _ := strconv.ParseInt(s, 10, 64)
+	return i
+}
+
+func parseUInt(s string) uint {
+	return uint(parseUInt64(s))
+}
+
+func parseUInt8(s string) uint8 {
+	i, _ := strconv.ParseUint(s, 10, 8)
+	return uint8(i)
+}
+
+func parseUInt16(s string) uint16 {
+	i, _ := strconv.ParseUint(s, 10, 16)
+	return uint16(i)
+}
+
+func parseUInt32(s string) uint32 {
+	i, _ := strconv.ParseUint(s, 10, 32)
+	return uint32(i)
+}
+
+func parseUInt64(s string) uint64 {
+	i, _ := strconv.ParseUint(s, 10, 64)
 	return i
 }
 
