@@ -1,10 +1,11 @@
-package denv
+package env
 
 import (
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Get wraps os.Getenv.
@@ -17,8 +18,7 @@ func Lookup(key string) (string, bool) {
 	return os.LookupEnv(key)
 }
 
-// GetD attempts to retrieve a string named by key. If the value is not present, def
-// is returned instead.
+// GetD attempts to retrieve a string named by key. If the value is not present, def is returned instead.
 func GetD(key string, def string) string {
 	v, ok := Lookup(key)
 	if !ok || v == "" {
@@ -221,6 +221,22 @@ func GetBoolD(key string, def bool) bool {
 		return def
 	}
 	return b
+}
+
+// GetDuration retrieves a time.Duration named by key.
+// time.Duration(0) is returned if the value does not exist or is not parsed as a valid time.Duration.
+func GetDuration(key string) time.Duration {
+	d, _ := time.ParseDuration(Get(key))
+	return d
+}
+
+// GetDurationD attempts to retrieve a time.Duration named by key. If the value is not present, def is returned instead.
+func GetDurationD(key string, def time.Duration) time.Duration {
+	d, err := time.ParseDuration(Get(key))
+	if err != nil {
+		return def
+	}
+	return d
 }
 
 func parseInt(s string) int {

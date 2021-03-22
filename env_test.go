@@ -1,4 +1,4 @@
-package denv
+package env
 
 import (
 	"fmt"
@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"runtime"
 	"testing"
+	"time"
 )
 
 func TestGet(t *testing.T) {
@@ -195,6 +196,16 @@ func TestGet(t *testing.T) {
 			value:    "YES",
 			fn:       GetBool,
 			expected: true,
+		},
+		{
+			value:    "1s",
+			fn:       GetDuration,
+			expected: 1 * time.Second,
+		},
+		{
+			value:    "100",
+			fn:       GetDuration,
+			expected: time.Duration(0),
 		},
 	}
 
@@ -411,6 +422,18 @@ func TestGetD(t *testing.T) {
 			def:      false,
 			fn:       GetBoolD,
 			expected: false,
+		},
+		{
+			value:    "5s",
+			def:      3 * time.Second,
+			fn:       GetDurationD,
+			expected: 5 * time.Second,
+		},
+		{
+			value:    "FOO",
+			def:      5 * time.Second,
+			fn:       GetDurationD,
+			expected: 5 * time.Second,
 		},
 	}
 
