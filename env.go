@@ -36,7 +36,10 @@ func GetString(key string) string {
 // GetStringD attempts to retrieve a string named by key. If the value is not present, def is returned instead.
 // It is functionally the same as GetD.
 func GetStringD(key string, def string) string {
-	return GetD(key, def)
+	if v := GetString(key); v != "" {
+		return v
+	}
+	return def
 }
 
 // GetInt retrieves an int named by key.
@@ -47,7 +50,7 @@ func GetInt(key string) int {
 
 // GetIntD attempts to retrieve an int named by key. If the value is not present, def is returned instead.
 func GetIntD(key string, def int) int {
-	if v := parseInt(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetInt(key); v != 0 {
 		return v
 	}
 	return def
@@ -61,7 +64,7 @@ func GetInt8(key string) int8 {
 
 // GetInt8D attempts to retrieve an int8 named by key. If the value is not present, def is returned instead.
 func GetInt8D(key string, def int8) int8 {
-	if v := parseInt8(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetInt8(key); v != 0 {
 		return v
 	}
 	return def
@@ -75,7 +78,7 @@ func GetInt16(key string) int16 {
 
 // GetInt16D attempts to retrieve an int16 named by key. If the value is not present, def is returned instead.
 func GetInt16D(key string, def int16) int16 {
-	if v := parseInt16(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetInt16(key); v != 0 {
 		return v
 	}
 	return def
@@ -89,7 +92,7 @@ func GetInt32(key string) int32 {
 
 // GetInt32D attempts to retrieve an int32 named by key. If the value is not present, def is returned instead.
 func GetInt32D(key string, def int32) int32 {
-	if v := parseInt32(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetInt32(key); v != 0 {
 		return v
 	}
 	return def
@@ -103,7 +106,7 @@ func GetInt64(key string) int64 {
 
 // GetInt64D attempts to retrieve an int64 named by key. If the value is not present, def is returned instead.
 func GetInt64D(key string, def int64) int64 {
-	if v := parseInt64(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetInt64(key); v != 0 {
 		return v
 	}
 	return def
@@ -117,7 +120,7 @@ func GetUInt(key string) uint {
 
 // GetUIntD attempts to retrieve an uint named by key. If the value is not present, def is returned instead.
 func GetUIntD(key string, def uint) uint {
-	if v := parseUInt(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetUInt(key); v != 0 {
 		return v
 	}
 	return def
@@ -131,7 +134,7 @@ func GetUInt8(key string) uint8 {
 
 // GetUInt8D attempts to retrieve an uint8 named by key. If the value is not present, def is returned instead.
 func GetUInt8D(key string, def uint8) uint8 {
-	if v := parseUInt8(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetUInt8(key); v != 0 {
 		return v
 	}
 	return def
@@ -145,7 +148,7 @@ func GetUInt16(key string) uint16 {
 
 // GetUInt16D attempts to retrieve an uint16 named by key. If the value is not present, def is returned instead.
 func GetUInt16D(key string, def uint16) uint16 {
-	if v := parseUInt16(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetUInt16(key); v != 0 {
 		return v
 	}
 	return def
@@ -159,7 +162,7 @@ func GetUInt32(key string) uint32 {
 
 // GetUInt32D attempts to retrieve an uint32 named by key. If the value is not present, def is returned instead.
 func GetUInt32D(key string, def uint32) uint32 {
-	if v := parseUInt32(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetUInt32(key); v != 0 {
 		return v
 	}
 	return def
@@ -173,7 +176,7 @@ func GetUInt64(key string) uint64 {
 
 // GetUInt64D attempts to retrieve an uint64 named by key. If the value is not present, def is returned instead.
 func GetUInt64D(key string, def uint64) uint64 {
-	if v := parseUInt64(GetD(key, fmt.Sprintf("%d", def))); v != 0 {
+	if v := GetUInt64(key); v != 0 {
 		return v
 	}
 	return def
@@ -187,7 +190,7 @@ func GetFloat32(key string) float32 {
 
 // GetFloat32D attempts to retrieve a float32 named by key. If the value is not present, def is returned instead.
 func GetFloat32D(key string, def float32) float32 {
-	if v := parseFloat32(GetD(key, fmt.Sprintf("%f", def))); v != 0 {
+	if v := GetFloat32(key); v != 0 {
 		return v
 	}
 	return def
@@ -201,7 +204,7 @@ func GetFloat64(key string) float64 {
 
 // GetFloat64D attempts to retrieve a float64 named by key. If the value is not present, def is returned instead.
 func GetFloat64D(key string, def float64) float64 {
-	if v := parseFloat64(GetD(key, fmt.Sprintf("%f", def))); v != 0 {
+	if v := GetFloat64(key); v != 0 {
 		return v
 	}
 	return def
@@ -216,7 +219,7 @@ func GetBool(key string) bool {
 
 // GetBoolD attempts to retrieve a bool named by key. If the value is not present, def is returned instead.
 func GetBoolD(key string, def bool) bool {
-	b, ok := parseBool(GetD(key, fmt.Sprintf("%t", def)))
+	b, ok := parseBool(GetStringD(key, fmt.Sprintf("%t", def)))
 	if !ok {
 		return def
 	}

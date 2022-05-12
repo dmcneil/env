@@ -11,7 +11,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGet(t *testing.T) {
+func TestPrefix_Get(t *testing.T) {
+	prefix := Prefix("FOO")
+
 	tests := []struct {
 		value string
 		fn    interface{}
@@ -20,192 +22,192 @@ func TestGet(t *testing.T) {
 	}{
 		{
 			value:    "BAR",
-			fn:       Get,
+			fn:       prefix.Get,
 			expected: "BAR",
 		},
 		{
 			value:    "BAR",
-			fn:       GetString,
+			fn:       prefix.GetString,
 			expected: "BAR",
 		},
 		{
 			value:    "1",
-			fn:       Get,
+			fn:       prefix.Get,
 			expected: "1",
 		},
 		{
 			value:    "1",
-			fn:       GetString,
+			fn:       prefix.GetString,
 			expected: "1",
 		},
 		{
 			value:    "1",
-			fn:       GetInt,
+			fn:       prefix.GetInt,
 			expected: 1,
 		},
 		{
 			value:    "1",
-			fn:       GetInt8,
+			fn:       prefix.GetInt8,
 			expected: int8(1),
 		},
 		{
 			value:    "1",
-			fn:       GetInt16,
+			fn:       prefix.GetInt16,
 			expected: int16(1),
 		},
 		{
 			value:    "1",
-			fn:       GetInt32,
+			fn:       prefix.GetInt32,
 			expected: int32(1),
 		},
 		{
 			value:    "1",
-			fn:       GetInt64,
+			fn:       prefix.GetInt64,
 			expected: int64(1),
 		},
 		{
 			value:    "-1",
-			fn:       GetUInt,
+			fn:       prefix.GetUInt,
 			expected: uint(0),
 		},
 		{
 			value:    "1",
-			fn:       GetUInt,
+			fn:       prefix.GetUInt,
 			expected: uint(1),
 		},
 		{
 			value:    "1",
-			fn:       GetUInt8,
+			fn:       prefix.GetUInt8,
 			expected: uint8(1),
 		},
 		{
 			value:    "1",
-			fn:       GetUInt16,
+			fn:       prefix.GetUInt16,
 			expected: uint16(1),
 		},
 		{
 			value:    "1",
-			fn:       GetUInt32,
+			fn:       prefix.GetUInt32,
 			expected: uint32(1),
 		},
 		{
 			value:    "1",
-			fn:       GetUInt64,
+			fn:       prefix.GetUInt64,
 			expected: uint64(1),
 		},
 		{
 			value:    "1",
-			fn:       GetFloat32,
+			fn:       prefix.GetFloat32,
 			expected: float32(1),
 		},
 		{
 			value:    "1",
-			fn:       GetFloat64,
+			fn:       prefix.GetFloat64,
 			expected: float64(1),
 		},
 		{
 			value:    "1.5",
-			fn:       GetInt,
+			fn:       prefix.GetInt,
 			expected: 0,
 		},
 		{
 			value:    "1.5",
-			fn:       GetInt64,
+			fn:       prefix.GetInt64,
 			expected: int64(0),
 		},
 		{
 			value:    "0",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "f",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "F",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "0",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "n",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "N",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "false",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "FALSE",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: false,
 		},
 		{
 			value:    "1",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "t",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "T",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "y",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "Y",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "true",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "TRUE",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "yes",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "YES",
-			fn:       GetBool,
+			fn:       prefix.GetBool,
 			expected: true,
 		},
 		{
 			value:    "1s",
-			fn:       GetDuration,
+			fn:       prefix.GetDuration,
 			expected: 1 * time.Second,
 		},
 		{
 			value:    "100",
-			fn:       GetDuration,
+			fn:       prefix.GetDuration,
 			expected: time.Duration(0),
 		},
 	}
@@ -213,7 +215,7 @@ func TestGet(t *testing.T) {
 	for i, test := range tests {
 		fnName := runtime.FuncForPC(reflect.ValueOf(test.fn).Pointer()).Name()
 		t.Run(fmt.Sprintf("%d %v", i, fnName), func(t *testing.T) {
-			_ = os.Setenv("FOO", test.value)
+			_ = os.Setenv("FOO_FOO", test.value)
 
 			args := []reflect.Value{reflect.ValueOf("FOO")}
 
@@ -224,7 +226,9 @@ func TestGet(t *testing.T) {
 	}
 }
 
-func TestGetD(t *testing.T) {
+func TestPrefix_GetD(t *testing.T) {
+	prefix := Prefix("FOO")
+
 	tests := []struct {
 		value string
 		def   interface{}
@@ -235,205 +239,205 @@ func TestGetD(t *testing.T) {
 		{
 			value:    "FOO",
 			def:      "BAR",
-			fn:       GetStringD,
+			fn:       prefix.GetStringD,
 			expected: "FOO",
 		},
 		{
 			value:    "",
 			def:      "BAR",
-			fn:       GetStringD,
+			fn:       prefix.GetStringD,
 			expected: "BAR",
 		},
 		{
 			value:    "FOO",
 			def:      "BAR",
-			fn:       GetStringD,
+			fn:       prefix.GetStringD,
 			expected: "FOO",
 		},
 		{
 			value:    "",
 			def:      "BAR",
-			fn:       GetStringD,
+			fn:       prefix.GetStringD,
 			expected: "BAR",
 		},
 		{
 			value:    "",
 			def:      "1",
-			fn:       GetStringD,
+			fn:       prefix.GetStringD,
 			expected: "1",
 		},
 		{
 			value:    "1",
 			def:      "2",
-			fn:       GetStringD,
+			fn:       prefix.GetStringD,
 			expected: "1",
 		},
 		{
 			value:    "",
 			def:      1,
-			fn:       GetIntD,
+			fn:       prefix.GetIntD,
 			expected: 1,
 		},
 		{
 			value:    "2.5",
 			def:      1,
-			fn:       GetIntD,
+			fn:       prefix.GetIntD,
 			expected: 1,
 		},
 		{
 			value:    "",
 			def:      int8(1),
-			fn:       GetInt8D,
+			fn:       prefix.GetInt8D,
 			expected: int8(1),
 		},
 		{
 			value:    "2.5",
 			def:      int8(1),
-			fn:       GetInt8D,
+			fn:       prefix.GetInt8D,
 			expected: int8(1),
 		},
 		{
 			value:    "",
 			def:      int16(1),
-			fn:       GetInt16D,
+			fn:       prefix.GetInt16D,
 			expected: int16(1),
 		},
 		{
 			value:    "2.5",
 			def:      int16(1),
-			fn:       GetInt16D,
+			fn:       prefix.GetInt16D,
 			expected: int16(1),
 		},
 		{
 			value:    "",
 			def:      int32(1),
-			fn:       GetInt32D,
+			fn:       prefix.GetInt32D,
 			expected: int32(1),
 		},
 		{
 			value:    "2.5",
 			def:      int32(1),
-			fn:       GetInt32D,
+			fn:       prefix.GetInt32D,
 			expected: int32(1),
 		},
 		{
 			value:    "",
 			def:      int64(1),
-			fn:       GetInt64D,
+			fn:       prefix.GetInt64D,
 			expected: int64(1),
 		},
 		{
 			value:    "2.5",
 			def:      int64(1),
-			fn:       GetInt64D,
+			fn:       prefix.GetInt64D,
 			expected: int64(1),
 		},
 		{
 			value:    "",
 			def:      uint(1),
-			fn:       GetUIntD,
+			fn:       prefix.GetUIntD,
 			expected: uint(1),
 		},
 		{
 			value:    "2.5",
 			def:      uint(1),
-			fn:       GetUIntD,
+			fn:       prefix.GetUIntD,
 			expected: uint(1),
 		},
 		{
 			value:    "",
 			def:      uint8(1),
-			fn:       GetUInt8D,
+			fn:       prefix.GetUInt8D,
 			expected: uint8(1),
 		},
 		{
 			value:    "2.5",
 			def:      uint8(1),
-			fn:       GetUInt8D,
+			fn:       prefix.GetUInt8D,
 			expected: uint8(1),
 		},
 		{
 			value:    "",
 			def:      uint16(1),
-			fn:       GetUInt16D,
+			fn:       prefix.GetUInt16D,
 			expected: uint16(1),
 		},
 		{
 			value:    "2.5",
 			def:      uint16(1),
-			fn:       GetUInt16D,
+			fn:       prefix.GetUInt16D,
 			expected: uint16(1),
 		},
 		{
 			value:    "",
 			def:      uint32(1),
-			fn:       GetUInt32D,
+			fn:       prefix.GetUInt32D,
 			expected: uint32(1),
 		},
 		{
 			value:    "2.5",
 			def:      uint32(1),
-			fn:       GetUInt32D,
+			fn:       prefix.GetUInt32D,
 			expected: uint32(1),
 		},
 		{
 			value:    "",
 			def:      uint64(1),
-			fn:       GetUInt64D,
+			fn:       prefix.GetUInt64D,
 			expected: uint64(1),
 		},
 		{
 			value:    "2.5",
 			def:      uint64(1),
-			fn:       GetUInt64D,
+			fn:       prefix.GetUInt64D,
 			expected: uint64(1),
 		},
 		{
 			value:    "",
 			def:      float32(1.5),
-			fn:       GetFloat32D,
+			fn:       prefix.GetFloat32D,
 			expected: float32(1.5),
 		},
 		{
 			value:    "",
 			def:      1.5,
-			fn:       GetFloat64D,
+			fn:       prefix.GetFloat64D,
 			expected: 1.5,
 		},
 		{
 			value:    "",
 			def:      false,
-			fn:       GetBoolD,
+			fn:       prefix.GetBoolD,
 			expected: false,
 		},
 		{
 			value:    "",
 			def:      true,
-			fn:       GetBoolD,
+			fn:       prefix.GetBoolD,
 			expected: true,
 		},
 		{
 			value:    "BAR",
 			def:      true,
-			fn:       GetBoolD,
+			fn:       prefix.GetBoolD,
 			expected: true,
 		},
 		{
 			value:    "BAR",
 			def:      false,
-			fn:       GetBoolD,
+			fn:       prefix.GetBoolD,
 			expected: false,
 		},
 		{
 			value:    "5s",
 			def:      3 * time.Second,
-			fn:       GetDurationD,
+			fn:       prefix.GetDurationD,
 			expected: 5 * time.Second,
 		},
 		{
 			value:    "FOO",
 			def:      5 * time.Second,
-			fn:       GetDurationD,
+			fn:       prefix.GetDurationD,
 			expected: 5 * time.Second,
 		},
 	}
@@ -441,7 +445,7 @@ func TestGetD(t *testing.T) {
 	for i, test := range tests {
 		fnName := runtime.FuncForPC(reflect.ValueOf(test.fn).Pointer()).Name()
 		t.Run(fmt.Sprintf("%d %v", i, fnName), func(t *testing.T) {
-			_ = os.Setenv("FOO", test.value)
+			_ = os.Setenv("FOO_FOO", test.value)
 
 			args := []reflect.Value{reflect.ValueOf("FOO"), reflect.ValueOf(test.def)}
 
